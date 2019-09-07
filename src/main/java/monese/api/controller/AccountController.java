@@ -31,15 +31,13 @@ public class AccountController {
   }
 
   @GetMapping("/accounts/{id}")
-  public Account getAccountById(@PathVariable(value = "id") Long accountId)
-          throws BadRequestException {
+  public Account getAccountById(@PathVariable(value = "id") Long accountId) throws BadRequestException {
     return accountRepository.findById(accountId)
             .orElseThrow(() -> new BadRequestException("Account with {" + accountId + "} does not exist"));
   }
 
   @GetMapping("/accounts/{id}/statement")
-  public Statement getAccountTransactions(@PathVariable(value = "id") Long accountId)
-          throws BadRequestException {
+  public Statement getAccountStatement(@PathVariable(value = "id") Long accountId) throws BadRequestException {
     final Account account = accountRepository.findById(accountId)
             .orElseThrow(() -> new BadRequestException("Account with {" + accountId + "} does not exist"));
     final List<StatementRow> statementHistory = transactionService.getTransactionsForAccount(account).stream().map(t ->
