@@ -1,5 +1,6 @@
 package monese.api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import java.math.BigDecimal;
 import java.time.Instant;
 import javax.persistence.Column;
@@ -9,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="transactions")
 public class Transaction {
 
   @Id
@@ -30,6 +33,9 @@ public class Transaction {
 
   @Column(nullable = false)
   private Instant instant = Instant.now();
+
+  @JsonCreator
+  public Transaction() {}
 
   public Transaction(Account fromAccount, Account toAccount, BigDecimal amount) {
     this.fromAccount = fromAccount;
